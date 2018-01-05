@@ -54,7 +54,7 @@ public class GuangdiuCheapJsonExecutor extends AbstractJsonExecutor {
         String pid = "int_shopguide_goods_guangdiu_cheap_"+obj.get("title").getAsString();
         logger.info("coupon cache key:{}",new Object[]{pid});
         if(redisTemplate.opsForValue().get(pid)!=null){
-            logger.info("guangdiu cheap-{} has collected!",new Object[]{obj.get("couponId")});
+            logger.info("guangdiu cheap-{} has collected!",new Object[]{obj.get("title")});
             return;
         }
 
