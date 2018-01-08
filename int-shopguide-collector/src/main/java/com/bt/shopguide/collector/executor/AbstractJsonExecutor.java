@@ -37,6 +37,8 @@ public abstract class AbstractJsonExecutor {
 
     @Value("${affiliate.account.amazon}")
     protected String amazon_account;
+    @Value("${affiliate.account.amazon.cn}")
+    protected String amazon_cn_account;
     @Value("${affiliate.account.ebay}")
     protected String ebay_account;
     @Value("${affiliate.account.alimama}")
@@ -90,6 +92,17 @@ public abstract class AbstractJsonExecutor {
                     link = url += "&tag="+amazon_account;
                 }else{
                     link = url += "?tag="+amazon_account;
+                }
+            }
+        //亚马逊中国
+        }else if("amazon.cn".equalsIgnoreCase(mainDomain)){
+            if(url.indexOf("tag=")>-1){
+                link = url.replaceAll("tag=[^&^=]*","tag="+amazon_cn_account);
+            }else{
+                if(url.indexOf("?")>-1){
+                    link = url += "&tag="+amazon_cn_account;
+                }else{
+                    link = url += "?tag="+amazon_cn_account;
                 }
             }
         //ebay的链接处理
