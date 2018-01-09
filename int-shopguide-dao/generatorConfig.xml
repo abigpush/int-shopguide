@@ -120,8 +120,14 @@
 			   <!--enableUpdateByExample="false">-->
 
 		<!--</table>-->
-		<table schema="cn-shopguide" tableName="GOOD_CHEAPS"
-			   domainObjectName="GoodCheap" enableCountByExample="yes"
+		<!--<table schema="cn-shopguide" tableName="GOOD_CHEAPS"-->
+			   <!--domainObjectName="GoodCheap" enableCountByExample="yes"-->
+			   <!--enableDeleteByExample="false" enableSelectByExample="yes"-->
+			   <!--enableUpdateByExample="false">-->
+
+		<!--</table>-->
+		<table schema="cn-shopguide" tableName="NAVIGATIONS"
+			   domainObjectName="Navigation" enableCountByExample="yes"
 			   enableDeleteByExample="false" enableSelectByExample="yes"
 			   enableUpdateByExample="false">
 

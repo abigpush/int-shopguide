@@ -84,6 +84,7 @@ public class GoodsController {
                 Map<String, Object> condition1 = Maps.newHashMap();
                 if (mallName != null) condition1.put("mallName", mallName);
                 if (category != null) condition1.put("category", category);
+                if(nation!=null&&nation.length()>0) condition.put("nation",nation);
                 if (id != null) condition1.put("id", id);
                 if (syncTime != null)
                     condition1.put("syncTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(syncTime)));

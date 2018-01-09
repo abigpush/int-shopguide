@@ -43,7 +43,7 @@ public class GoodCheapController {
      *商品列表
      **/
     @ResponseBody
-    @RequestMapping(value = "/cheaps")
+    @RequestMapping(value = {"/cheaps","/m/cheap/goods"})
     public JsonResult getCheapsList(@RequestParam(value = "page",defaultValue = "1") Integer pageIndex,
                                    @RequestParam(value = "category",required = false) String category){
         JsonResult result = new JsonResult();
