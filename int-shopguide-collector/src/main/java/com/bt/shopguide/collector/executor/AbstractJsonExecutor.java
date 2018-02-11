@@ -24,7 +24,7 @@ import java.util.Random;
  */
 public abstract class AbstractJsonExecutor {
     @Autowired
-    protected RedisTemplate<String,String> redisTemplate;
+    protected RedisTemplate<String, String> redisTemplate;
     @Autowired
     protected IGoodsListService goodsListService;
     @Autowired
@@ -52,20 +52,20 @@ public abstract class AbstractJsonExecutor {
 
     public abstract void execute(String json);
 
-    protected String getMainDomain(String url){
+    protected String getMainDomain(String url) {
         String domain = "";
         domain = URLUtil.getMainDomain(url);
         //如果是乐天特殊处理
-        if("linksynergy.com".equalsIgnoreCase(domain)){
+        if ("linksynergy.com".equalsIgnoreCase(domain)) {
             try {
                 URL url1 = new URL(url);
                 String path = url1.getQuery();
-                String realUrl = URLUtil.getParameter(path,"RD_PARM1","utf-8");
-                if(realUrl != null){
+                String realUrl = URLUtil.getParameter(path, "RD_PARM1", "utf-8");
+                if (realUrl != null) {
                     domain = getMainDomain(realUrl);
-                }else{
-                    realUrl = URLUtil.getParameter(path,"murl","utf-8");
-                    if(realUrl != null) {
+                } else {
+                    realUrl = URLUtil.getParameter(path, "murl", "utf-8");
+                    if (realUrl != null) {
                         domain = getMainDomain(realUrl);
                     }
                 }
@@ -77,45 +77,45 @@ public abstract class AbstractJsonExecutor {
     }
 
     //处理抓取时间，分配在抓取时间+随机未来一小时以内
-    protected Date dealSyncTime(Date d){
-        int ms = (int)Math.ceil(Math.random()*3600*1000);
-        return new Date(d.getTime()+ms);
+    protected Date dealSyncTime(Date d) {
+        int ms = (int) Math.ceil(Math.random() * 3600 * 1000);
+        return new Date(d.getTime() + ms);
     }
 
     //转链
-    protected String dealUrl(String url){
+    protected String dealUrl(String url) {
         String link = null;
 
         String domain = URLUtil.getDomain(url);
         String mainDomain = URLUtil.getMainDomain(url);
         //如果是美国亚马逊
-        if("amazon.com".equalsIgnoreCase(mainDomain)){
-            if(url.indexOf("tag=")>-1){
-                link = url.replaceAll("tag=[^&^=]*","tag="+amazon_account);
-            }else{
-                if(url.indexOf("?")>-1){
-                    link = url += "&tag="+amazon_account;
-                }else{
-                    link = url += "?tag="+amazon_account;
+        if ("amazon.com".equalsIgnoreCase(mainDomain)) {
+            if (url.indexOf("tag=") > -1) {
+                link = url.replaceAll("tag=[^&^=]*", "tag=" + amazon_account);
+            } else {
+                if (url.indexOf("?") > -1) {
+                    link = url += "&tag=" + amazon_account;
+                } else {
+                    link = url += "?tag=" + amazon_account;
                 }
             }
-        //亚马逊中国
-        }else if("amazon.cn".equalsIgnoreCase(mainDomain)){
-            if(url.indexOf("tag=")>-1){
-                link = url.replaceAll("tag=[^&^=]*","tag="+amazon_cn_account);
-            }else{
-                if(url.indexOf("?")>-1){
-                    link = url += "&tag="+amazon_cn_account;
-                }else{
-                    link = url += "?tag="+amazon_cn_account;
+            //亚马逊中国
+        } else if ("amazon.cn".equalsIgnoreCase(mainDomain)) {
+            if (url.indexOf("tag=") > -1) {
+                link = url.replaceAll("tag=[^&^=]*", "tag=" + amazon_cn_account);
+            } else {
+                if (url.indexOf("?") > -1) {
+                    link = url += "&tag=" + amazon_cn_account;
+                } else {
+                    link = url += "?tag=" + amazon_cn_account;
                 }
             }
-        //ebay的链接处理
-        }else if("rover.ebay.com".equalsIgnoreCase(domain)){
-            link = url.replaceAll("campid=[^&^=]*","campid="+ebay_account);
-        }else if("uland.taobao.com".equalsIgnoreCase(domain)){
-            link = url.replaceAll("pid=[^&^=]*","pid="+alimama_account);
-        }else{
+            //ebay的链接处理
+        } else if ("rover.ebay.com".equalsIgnoreCase(domain)) {
+            link = url.replaceAll("campid=[^&^=]*", "campid=" + ebay_account);
+        } else if ("uland.taobao.com".equalsIgnoreCase(domain)) {
+            link = url.replaceAll("pid=[^&^=]*", "pid=" + alimama_account);
+        } else {
             link = url;
         }
 
@@ -125,20 +125,25 @@ public abstract class AbstractJsonExecutor {
     /**
      * 处理内容或html内容，爬虫可能通过标签匹配出来多个容器里的内容，结果会是一个数组
      **/
-    protected String dealContent(String content){
-        if(StringUtils.isEmpty(content)){
+    protected String dealContent(String content) {
+        if (StringUtils.isEmpty(content)) {
             return "";
         }
-        content = content.replace("\\\\n","");
-        JsonElement ele = new com.google.gson.JsonParser().parse(content.trim());
+        JsonElement ele;
+        content = content.replace("\\\\n", "");
+        try {
+            ele = new com.google.gson.JsonParser().parse(content.trim());
+        } catch (Exception e) {
+            return content;
+        }
 
-        if(ele instanceof JsonArray){
+        if (ele instanceof JsonArray) {
             JsonArray arr = (JsonArray) ele;
             StringBuffer sb = new StringBuffer();
-            for(JsonElement e : ele.getAsJsonArray()){
+            for (JsonElement e : ele.getAsJsonArray()) {
                 sb.append(e.getAsString());
             }
-            return arr.toString();
+            return sb.toString();
         }
         return content;
     }

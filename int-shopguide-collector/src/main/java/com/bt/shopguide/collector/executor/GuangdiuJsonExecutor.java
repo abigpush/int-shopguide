@@ -145,6 +145,6 @@ public class GuangdiuJsonExecutor extends AbstractJsonExecutor {
     }
 
     public static void main(String[] args) {
-        new GuangdiuJsonExecutor().dealContent("aaa");
+        System.out.println(new GuangdiuJsonExecutor().dealContent("[\"<div class=\\\"mb10 add-copper\\\"> \\n <span class=\\\"d-report orange link\\\" id=\\\"setTimeout\\\"> <i class=\\\"nj-icon nj-icon-warn\\\"></i> </span> \\n</div> \\n<div class=\\\"desc-con post-content\\\" data-outlink>\\n <p> </p>\\n <p> Craft 男士贴身层套装运动内衣采用平缝接缝技术，无束缚感，面料柔软舒适，为冬季中等强度的户外I运动提供保暖和排汗功能，常规剪裁，适合各种身材。 </p> \\n <p> 目前亚马逊<strong>镇店之宝价199元包邮</strong>，近期好价，限M码。 </p> \\n <div> \\n  <br> \\n </div> \\n <p></p> \\n <div class=\\\"con clearfix editor-frame frame\\\"> \\n </div>\\n</div>\",\"<div class=\\\"mdbcontent\\\">\\n <div class=\\\"dp-desc\\\"> \\n  <div class=\\\"mb10 add-copper\\\"> \\n   <span class=\\\"d-report orange link\\\" id=\\\"setTimeout\\\"> <i class=\\\"nj-icon nj-icon-warn\\\"></i> </span> \\n  </div> \\n  <div class=\\\"desc-con post-content\\\" data-outlink>\\n   <p> </p>\\n   <p> Craft 男士贴身层套装运动内衣采用平缝接缝技术，无束缚感，面料柔软舒适，为冬季中等强度的户外I运动提供保暖和排汗功能，常规剪裁，适合各种身材。 </p> \\n   <p> 目前亚马逊<strong>镇店之宝价199元包邮</strong>，近期好价，限M码。 </p> \\n   <div> \\n    <br> \\n   </div> \\n   <p></p> \\n   <div class=\\\"con clearfix editor-frame frame\\\"> \\n   </div>\\n  </div> \\n </div>\\n</div>\",\"\"]"));
     }
 }
