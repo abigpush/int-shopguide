@@ -5,6 +5,11 @@ import com.bt.shopguide.collector.util.URLUtil;
 import com.bt.shopguide.dao.service.IGoodsDetailService;
 import com.bt.shopguide.dao.service.IGoodsErrorsService;
 import com.bt.shopguide.dao.service.IGoodsListService;
+import com.fasterxml.jackson.core.JsonParser;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -115,5 +120,26 @@ public abstract class AbstractJsonExecutor {
         }
 
         return link;
+    }
+
+    /**
+     * 处理内容或html内容，爬虫可能通过标签匹配出来多个容器里的内容，结果会是一个数组
+     **/
+    protected String dealContent(String content){
+        if(StringUtils.isEmpty(content)){
+            return "";
+        }
+        content = content.replace("\\\\n","");
+        JsonElement ele = new com.google.gson.JsonParser().parse(content.trim());
+
+        if(ele instanceof JsonArray){
+            JsonArray arr = (JsonArray) ele;
+            StringBuffer sb = new StringBuffer();
+            for(JsonElement e : ele.getAsJsonArray()){
+                sb.append(e.getAsString());
+            }
+            return arr.toString();
+        }
+        return content;
     }
 }

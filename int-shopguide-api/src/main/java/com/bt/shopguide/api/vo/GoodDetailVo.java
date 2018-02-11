@@ -45,6 +45,7 @@ public class GoodDetailVo implements Serializable {
         this.syncTime = entity.getSyncTime();
         try {
             this.contentHtml = new String(entity.getContentHtml(),charset);
+//            this.contentHtml = this.contentHtml.replaceAll("\\\\n","");
         } catch (UnsupportedEncodingException e) {
             this.contentHtml="";
         }

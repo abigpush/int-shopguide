@@ -90,6 +90,7 @@ public class GuangdiuJsonExecutor extends AbstractJsonExecutor {
             glist.setTitle((obj.get("title")==null||obj.get("title").equals(JsonNull.INSTANCE))?"":obj.get("title").getAsString());
             glist.setDiscounts((obj.get("price")==null||obj.get("price").equals(JsonNull.INSTANCE))?"":obj.get("price").getAsString());
             String content = (obj.get("content")==null||obj.get("content").equals(JsonNull.INSTANCE))?"":obj.get("content").getAsString().replaceAll("<br/>","").trim();
+            content = dealContent(content);
             if(content.length()>160)
                 content = content.substring(0,160);
             glist.setShortContent(content);
@@ -124,7 +125,9 @@ public class GuangdiuJsonExecutor extends AbstractJsonExecutor {
                 gerror.setReason("insert into goods_list faild！"+e.getMessage());
             }
             if(n>0){
-                gdetail.setContentHtml((obj.get("contentHTML")==null || obj.get("contentHTML").equals(JsonNull.INSTANCE))?null:obj.get("contentHTML").getAsString().getBytes(charset));
+                String contentHtml = (obj.get("contentHTML")==null || obj.get("contentHTML").equals(JsonNull.INSTANCE))?null:obj.get("contentHTML").getAsString();
+                contentHtml = dealContent(contentHtml);
+                gdetail.setContentHtml(contentHtml.getBytes(charset));
                 gdetail.setCreateTime(new Date());
                 gdetail.setGoodsId(glist.getId());
                 try {
@@ -139,5 +142,9 @@ public class GuangdiuJsonExecutor extends AbstractJsonExecutor {
         } catch (Exception e){
             logger.error("save coupon faild with exception :" + e);
         }
+    }
+
+    public static void main(String[] args) {
+        new GuangdiuJsonExecutor().dealContent("aaa");
     }
 }
