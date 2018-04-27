@@ -148,7 +148,15 @@ public class HuihuiJsonExecutor extends AbstractJsonExecutor {
 //            glist.setSmallImageUrl(obj.get("img").getAsString());
             glist.setSmallImageUrl((obj.get("img")==null || obj.get("img").equals(JsonNull.INSTANCE))?"":obj.get("img").getAsString());
             glist.setPublish(publish);
-            glist.setSyncTime(dealSyncTime(sdf.parse(obj.get("CRAWL_TIME").getAsString().replaceAll("T"," ").replaceAll("Z",""))));
+            try {
+                glist.setSyncTime(dealSyncTime(sdf.parse(obj.get("CRAWL_TIME").getAsString().replaceAll("T", " ").replaceAll("Z", ""))));
+            }catch(Exception e){
+                try {
+                    glist.setSyncTime(new Date(Long.valueOf(obj.get("CRAWL_TIME").getAsString())));
+                }catch(Exception e1){
+                    throw new Exception("抓取时间格式转换错误！"+obj.get("CRAWL_TIME").getAsString());
+                }
+            }
             glist.setCreateTime(new Date());
             glist.setThumbs(Math.abs(new Random().nextInt()%20));
             //插入goodslist
