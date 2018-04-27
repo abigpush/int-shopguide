@@ -15,9 +15,9 @@ http://activemq.apache.org/schema/core
 http://activemq.apache.org/schema/core/activemq-core-5.12.1.xsd">
 
     <amq:connectionFactory id="amqConnectionFactory"
-                           brokerURL="tcp://192.168.70.78:61616"
-                           userName="ecdis"
-                           password="ecdis8888!@#" />
+                           brokerURL="tcp://47.96.181.180:61616"
+                           userName="admin"
+                           password="admin@20180401" />
 
     <!-- 配置JMS连接工厂 -->
     <bean id="connectionFactory"
@@ -181,5 +181,24 @@ http://activemq.apache.org/schema/core/activemq-core-5.12.1.xsd">
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="destination" ref="guangdiuCheapQueue" />
         <property name="messageListener" ref="guangdiuCheapListener" />
+    </bean>
+    <!-- ************************************************************* -->
+    <!-- 定义消息队列（huihuiQueue） -->
+    <bean id="huihuiQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <!-- 设置消息队列的名字 -->
+        <constructor-arg>
+            <value>huihui_linkchange</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 配置消息队列监听者（Queue） -->
+    <bean id="huihuiListener" class="com.bt.shopguide.collector.mq.listener.HuihuiListener" />
+
+    <!-- 显示注入消息监听容器（Queue），配置连接工厂，监听的目标是demoQueueDestination，监听器是上面定义的监听器 -->
+    <bean id="huihuiListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="huihuiQueue" />
+        <property name="messageListener" ref="huihuiListener" />
     </bean>
 </beans>

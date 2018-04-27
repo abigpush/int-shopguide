@@ -27,19 +27,19 @@ public class LocalApplicationListener implements ApplicationListener<ContextRefr
             //初始化系统参数和不经常变动的数据库数据
             globalVariable.init();
             //启动商品数据上传
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    syncGoodsTask.execute();
-                }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    syncGoodsTask.execute();
+//                }
+//            }).start();
             //启动九块九商品数据上传
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    syncCheapTask.execute();
-                }
-            }).start();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    syncCheapTask.execute();
+//                }
+//            }).start();
         }
     }
 }
