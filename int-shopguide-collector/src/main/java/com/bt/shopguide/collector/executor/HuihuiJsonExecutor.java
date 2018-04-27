@@ -75,6 +75,24 @@ public class HuihuiJsonExecutor extends AbstractJsonExecutor {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    public static String testJson="{\n" +
+            " \"img\": \"http://oimageb5.ydstatic.com/image?id=-172346723140468161&product=gouwu\",\n" +
+            " \"canvas\": \"<canvas class=\\\"hui-history-axis\\\" width=\\\"720\\\" height=\\\"365\\\"></canvas><canvas class=\\\"hui-history-curve\\\" width=\\\"720\\\" height=\\\"365\\\"></canvas><canvas class=\\\"hui-history-canvas-tooltip\\\" note-type=\\\"tooltip-pointe\\\" width=\\\"720\\\" height=\\\"365\\\"></canvas><div class=\\\"hui-history-labels\\\"><div class=\\\"hui-history-time-axis\\\"><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:691px;\\\">4-18</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:580px;\\\">3-24</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:469px;\\\">2-27</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:358px;\\\">2-02</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:247px;\\\">1-08</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:136px;\\\">12-14</div><div class=\\\"hui-history-time-label-pc\\\" style=\\\"left:35px;\\\">11-18</div></div><div class=\\\"hui-history-price-axis\\\"><div class=\\\"hui-history-price-label\\\" style=\\\"top:-6px;\\\">300</div><div class=\\\"hui-history-price-label\\\" style=\\\"top:78px;\\\">250</div><div class=\\\"hui-history-price-label\\\" style=\\\"top:164px;\\\">200</div><div class=\\\"hui-history-price-label\\\" style=\\\"top:250px;\\\">150</div><div class=\\\"hui-history-price-label\\\" style=\\\"top:337px;\\\">100</div></div></div><div class=\\\"hui-history-most-price\\\"><dl style=\\\"top:55px;\\\"><dd>261.4</dd></dl><dl style=\\\"top:266px;\\\"><dd>145</dd></dl><dl style=\\\"top:165px;\\\" class=\\\"can-append\\\"><dd>199</dd></dl></div>\",\n" +
+            " \"ps\": \"亚马逊中国目前Z秒杀价139元包邮，低于以往国内推荐好价，适合新生儿各种姿势，多种玩法，喜欢的家长可以关注。\",\n" +
+            " \"CRAWL_TIME\": 1524017911250,\n" +
+            " \"pid\": \"48945761\",\n" +
+            " \"abstract\": \"早教益智与体能锻炼融合。躺着玩、坐着玩、爬着玩多种玩法。按动星星可切换模式，可拆卸玩偶，月亮小夜灯动物挂件可单独拆下来玩耍 \",\n" +
+            " \"source\": \"亚马逊\",\n" +
+            " \"title\": \"FERSOAR F 烽索 HX20104 婴儿脚踏钢琴健身架 139元包邮\",\n" +
+            " \"url\": \"http://www.huihui.cn/deals/48945761\",\n" +
+            " \"content\": \"婴儿脚踏钢琴健身架，早教益智与体能锻炼融合。躺着玩、坐着玩、爬着玩多种玩法。按动星星可切换模式，可拆卸玩偶，月亮小夜灯动物挂件可单独拆下来玩耍。柔和护眼灯光、促进感官发育。走线紧密，活性环保印染，透气排湿。\",\n" +
+            " \"buyLink\": \"http://www.amazon.cn/gp/redirect.html?ie=UTF8&linkCode=ur2&tag=huihuichaozhigou-23&location=http://www.amazon.cn/mn/detailApp?asin=b076x4m5ns\",\n" +
+            " \"cat\": \"guonei\",\n" +
+            " \"SEED_ID\": 75,\n" +
+            " \"CREATE_TIME\": 1524017973019,\n" +
+            " \"reallink\": \"https://www.amazon.cn/mn/detailApp?asin=b076x4m5ns\"\n" +
+            " }";
+
     @Override
     public void execute(String json) {
         JsonObject obj = new JsonParser().parse(json).getAsJsonObject();
@@ -127,9 +145,10 @@ public class HuihuiJsonExecutor extends AbstractJsonExecutor {
             byte publish = 1;
             //? 这里需转链
             glist.setUrl(dealUrl(url));
-            glist.setSmallImageUrl(obj.get("img").getAsString());
+//            glist.setSmallImageUrl(obj.get("img").getAsString());
+            glist.setSmallImageUrl((obj.get("img")==null || obj.get("img").equals(JsonNull.INSTANCE))?"":obj.get("img").getAsString());
             glist.setPublish(publish);
-            glist.setSyncTime(dealSyncTime(sdf.parse(obj.get("crawlTime").getAsString().replaceAll("T"," ").replaceAll("Z",""))));
+            glist.setSyncTime(dealSyncTime(sdf.parse(obj.get("CRAWL_TIME").getAsString().replaceAll("T"," ").replaceAll("Z",""))));
             glist.setCreateTime(new Date());
             glist.setThumbs(Math.abs(new Random().nextInt()%20));
             //插入goodslist

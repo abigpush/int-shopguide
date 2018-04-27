@@ -1,7 +1,4 @@
-import com.bt.shopguide.collector.executor.DealmoonJsonExecutor;
-import com.bt.shopguide.collector.executor.DealnewsJsonExecutor;
-import com.bt.shopguide.collector.executor.DealsofamericaJsonExecutor;
-import com.bt.shopguide.collector.executor.TechbargainsJsonExecutor;
+import com.bt.shopguide.collector.executor.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,10 +13,11 @@ public class Test {
         String[] cfgs = new String[]{"classpath:applicationContext.xml"};
         ApplicationContext ctx = new ClassPathXmlApplicationContext(cfgs);
 //
-        ((DealmoonJsonExecutor)ctx.getBean("dealmoonJsonExecutor")).execute(DealmoonJsonExecutor.testJson);
+//        ((DealmoonJsonExecutor)ctx.getBean("dealmoonJsonExecutor")).execute(DealmoonJsonExecutor.testJson);
 //        ((TechbargainsJsonExecutor)ctx.getBean("techbargainsJsonExecutor")).execute(TechbargainsJsonExecutor.testJson);
 //        ((DealnewsJsonExecutor)ctx.getBean("dealnewsJsonExecutor")).execute(DealnewsJsonExecutor.testJson);
 //        ((DealsofamericaJsonExecutor)ctx.getBean("dealsofamericaJsonExecutor")).execute(DealsofamericaJsonExecutor.testJson);
+        ((HuihuiJsonExecutor)ctx.getBean("huihuiJsonExecutor")).execute(HuihuiJsonExecutor.testJson);
         System.out.println("saved !");
 
     }
